@@ -4,7 +4,7 @@
 
 # Set from Session or...
 
-setwd("C:/Users/User/Documents/RProj22/foundation_labs_2022/foundation_lab_1")
+
 
 
 
@@ -24,8 +24,11 @@ library(tidyverse)
 online_classes <- read_csv("data/sci-online-classes.csv")
 
 view(online_classes)
+
 head(online_classes, n=5)
+
 tail(online_classes, n =5)
+glimpse(online_classes)
 
 #############################
 ##### Read in Excel File ####
@@ -35,7 +38,7 @@ library(readxl)
 
 ccss_tweets <- read_excel("data/csss_tweets.xlsx")
 view(ccss_tweets)
-head(csss_tweets, n = 5)
+head(ccss_tweets, n = 5)
 tail(ccss_tweets, n = 5)
 
 ###### Excel Function ######## 

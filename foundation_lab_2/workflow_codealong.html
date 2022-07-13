@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jeanne McClure" />
 
-<meta name="date" content="2022-07-08" />
+<meta name="date" content="2022-07-13" />
 
 <title>workflow_codealong</title>
 
@@ -1512,7 +1512,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">workflow_codealong</h1>
 <h4 class="author">Jeanne McClure</h4>
-<h4 class="date">2022-07-08</h4>
+<h4 class="date">2022-07-13</h4>
 
 </div>
 
@@ -1598,8 +1598,8 @@ we use a five step process: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhE
 <h2>1. Prepare</h2>
 <p>Load Packages</p>
 <pre class="r"><code>#Load necessary packages
-library(tidyverse)
-library(here)</code></pre>
+library(tidyverse) #general analysis using dplyr
+library(here) #read in data</code></pre>
 </div>
 <div id="wrangle" class="section level2">
 <h2>2. Wrangle</h2>
@@ -1622,7 +1622,7 @@ our <code>log-data.csv</code> file directly from our data folder and
 name this data set <code>time_spent</code>, to help us to quickly
 recollect what function it serves in this analysis:</p>
 <pre class="r"><code>#load with read_csv package
-time_spent &lt;- read_csv(&quot;~/RProj22/foundation_labs_2022/foundation_lab_2/data/log-data.csv&quot;)</code></pre>
+time_spent &lt;- read_csv(&quot;data/log-data.csv&quot;)</code></pre>
 <pre><code>## Rows: 716 Columns: 6
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -1704,7 +1704,20 @@ survey &lt;- read_csv(here(&quot;data&quot;, &quot;survey.csv&quot;))</code></pr
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>#inspect data with view - yes the &quot;V&quot; is capitalized
-View(survey)</code></pre>
+head(survey)</code></pre>
+<pre><code>## # A tibble: 6 × 26
+##   student_ID course_ID  subject semester section   int   val percomp    tv    q1
+##   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 43146      FrScA-S21… FrScA   S216     02        4.2  3.67     4    3.86     4
+## 2 44638      OcnA-S116… OcnA    S116     01        4    3        3    3.57     4
+## 3 47448      FrScA-S21… FrScA   S216     01        4.2  3        3    3.71     5
+## 4 47979      OcnA-S216… OcnA    S216     01        4    3.67     2.5  3.86     4
+## 5 48797      PhysA-S11… PhysA   S116     01        3.8  3.67     3.5  3.71     4
+## 6 51943      FrScA-S21… FrScA   S216     03        3.8  3.67     3.5  3.71     4
+## # … with 16 more variables: q2 &lt;dbl&gt;, q3 &lt;dbl&gt;, q4 &lt;dbl&gt;, q5 &lt;dbl&gt;, q6 &lt;dbl&gt;,
+## #   q7 &lt;dbl&gt;, q8 &lt;dbl&gt;, q9 &lt;dbl&gt;, q10 &lt;dbl&gt;, date.x &lt;dttm&gt;, post_int &lt;dbl&gt;,
+## #   post_uv &lt;dbl&gt;, post_tv &lt;dbl&gt;, post_percomp &lt;dbl&gt;, date.y &lt;dttm&gt;,
+## #   date &lt;dttm&gt;</code></pre>
 </div>
 </div>
 <div id="b.-tidy-data" class="section level3">
@@ -1716,6 +1729,8 @@ View(survey)</code></pre>
 </div>
 <div id="separate-course_id-variable-in-the-time-spent" class="section level1">
 <h1>separate course_id variable in the time-spent</h1>
+<p>The <code>c()</code> function in R is used to get the output by
+giving parameters inside the function.</p>
 <pre class="r"><code>time_spent %&gt;%  
   separate(course_id,
            c(&quot;subject&quot;, &quot;semester&quot;, &quot;section&quot;))</code></pre>
@@ -1866,6 +1881,10 @@ survey</code></pre>
 </div>
 <div id="c.-join-data" class="section level4">
 <h4>C. Join Data</h4>
+</div>
+</div>
+<div id="join-together-the-grade_book-and-log_wrangled" class="section level1">
+<h1>join together the grade_book and log_wrangled</h1>
 <pre class="r"><code># use single join to join data sets by student_id, subject, semester and section.
 joined_data &lt;- full_join(gradebook, time_spent_2, 
                          by = c(&quot;student_id&quot;, &quot;subject&quot;, &quot;semester&quot;, &quot;section&quot;))
@@ -1887,14 +1906,8 @@ joined_data</code></pre>
 ## # … with 820 more rows, and 6 more variables: proportion_earned &lt;dbl&gt;,
 ## #   gender &lt;chr&gt;, enrollment_reason &lt;chr&gt;, enrollment_status &lt;chr&gt;,
 ## #   time_spent &lt;dbl&gt;, time_spent_hours &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<div id="join-together-the-grade_book-and-log_wrangled" class="section level1">
-<h1>join together the grade_book and log_wrangled</h1>
-<p>data_to_explore &lt;- full_join(joined_data, survey, by =
-c(“student_id”, “subject”, “section”))</p>
-<p>#Inspect data data_to_explore</p>
-<pre class="r"><code># add a join with joined data and survey</code></pre>
+<pre class="r"><code>data_to_explore  &lt;- full_join(joined_data, survey, by = c(&quot;student_id&quot;,
+&quot;subject&quot;, &quot;section&quot;))</code></pre>
 <pre class="r"><code>#mutate to change variable class from double or numeric to character
 joined_data &lt;- joined_data %&gt;%
   mutate(student_id = as.character(student_id))

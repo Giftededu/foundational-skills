@@ -63,7 +63,7 @@ Bullet points can be used with a `single dash` or a `plus sign`
 > Outcomes:
 
 -   Learn R Markdown.
-    +   Learn about Yaml heading.
+    -   Learn about Yaml heading.
     -   Learn R Markdown Syntax.
 -   Learn how to read in data.
 -   Learn to wrangle data.
@@ -73,6 +73,9 @@ Bullet points can be used with a `single dash` or a `plus sign`
 1.  Menu Bar \> 'Code' \> 'insert chunk'
 
 2.  Add a code chunk by holding down `Ctrl` + `Alt` + `I`
+
+
+
 
 ## 2. WorkFlow Recap
 
@@ -95,8 +98,9 @@ Load Packages
 ```{r warning =FALSE, message=FALSE}
 
 #Load necessary packages
-library(tidyverse)
-library(here)
+
+library(tidyverse) #general analysis using dplyr
+library(here) #read in data
 ```
 
 ## 2. Wrangle
@@ -123,7 +127,7 @@ this analysis:
 
 ```{r}
 #load with read_csv package
-time_spent <- read_csv("~/RProj22/foundation_labs_2022/foundation_lab_2/data/log-data.csv")
+time_spent <- read_csv("data/log-data.csv")
 ```
 
 Now let's load it with the {here} package.
@@ -153,18 +157,20 @@ glimpse(gradebook)
 
 The third data source is a self-report survey. This was data collected
 before the start of the course. The survey included ten items, each
-corresponding to one of three motivation measures: interest, utility value, and perceived competence. These were chosen for their alignment
+corresponding to one of three motivation measures: interest, utility
+value, and perceived competence. These were chosen for their alignment
 with one way to think about students' motivation, to what extent they
 expect to do well (corresponding to their perceived competence) and
 their value for what they are learning (corresponding to their interest
-and utility value). 
+and utility value).
 
 ```{r}
 #load data 3:Self-Report Survey
 survey <- read_csv(here("data", "survey.csv"))
 
-#inspect data with view - yes the "V" is capitalized
-View(survey)
+#inspect data with view
+head(survey)
+tail(survey)
 ```
 
 ### b. Tidy data
@@ -173,11 +179,16 @@ View(survey)
 
 # separate course_id variable in the time-spent
 
+The `c()` function in R is used to get the output by giving parameters
+inside the function.
+
 ```{r}
 time_spent %>%  
   separate(course_id,
            c("subject", "semester", "section"))
 
+
+time_spent
 
 ```
 
@@ -235,6 +246,8 @@ survey
 
 #### C. Join Data
 
+# join together the grade_book and log_wrangled
+
 ```{r}
 # use single join to join data sets by student_id, subject, semester and section.
 joined_data <- full_join(gradebook, time_spent_2, 
@@ -243,19 +256,11 @@ joined_data <- full_join(gradebook, time_spent_2,
 joined_data
 ```
 
-# join together the grade_book and log_wrangled
-
-data_to_explore \<- full_join(joined_data, survey, by = c("student_id",
-"subject", "section"))
-
-#Inspect data data_to_explore
-
 ```{r eval = FALSE}
-# add a join with joined data and survey
-
-
+data_to_explore  <- full_join(joined_data, survey, by = c("student_id",
+"subject", "section"))
+data_to_explore
 ```
-
 
 ```{r}
 #mutate to change variable class from double or numeric to character

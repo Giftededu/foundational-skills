@@ -222,6 +222,7 @@ _ Narrate
 <img src="img/communicate_wflow.png" height="250px"/>
 ]
 ]
+
 ???
 
 **CYCLE-TAB**
@@ -557,6 +558,7 @@ time_spent <- read_csv(here(
 
 ]
 ]
+
 ???
 **WORKFLOW TAB**
 

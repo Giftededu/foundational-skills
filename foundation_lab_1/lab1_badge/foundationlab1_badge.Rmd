@@ -68,17 +68,27 @@ Draft a research question of guided by techniques and data sources that you are 
 
 After you finish the script file for [lab1_badge](https://github.com/laser-institute/foundational-skills/tree/master/foundation_lab_1/lab1_badge) add the code fo reach problem into the correct code chunks below. # Making sure not to change the code chunk name.
 
+Problem 1:
+
+Create a data frame that includes two columns, one named "Students" and the other named "Foods". The first column should be this vector (note the intentional repeated values): Thor, Rogue, Electra, Electra, Wolverine
+
+
+The second column should be this vector: Bread, Orange, Chocolate, Carrots, Milk
 
 ```{r, problem_1}
 # YOUR FINAL CODE HERE
+animals <- c("Thor", "Rogue", "Electra", "Electra", "Wolverine")
+food <- c("Bread", "Orange", "Chocolate", "Carrots", "Milk")
 
 
 ```
 
 
 ```{r, problem_2}
-# YOUR FINAL CODE HERE
 
+students <- c("Thor", "Rogue", "Electra", "Electra", "Wolverine")
+food <- c("Bread", "Orange", "Chocolate", "Carrots", "Milk")
+df <- data.frame(students, food)
 
 ```
 
@@ -86,15 +96,17 @@ After you finish the script file for [lab1_badge](https://github.com/laser-insti
 ```{r, problem_3}
 # YOUR FINAL CODE HERE
 
-
+table(df$students)
 ```
 
 
 
 ```{r, problem_4}
 # YOUR FINAL CODE HERE
+library(tidyverse)
+sci_classes <- read_csv("~/RProj22/foundation_labs_2022/foundation_lab_1/data/sci-online-classes.csv")
 
-
+view(sci_classes)
 ```
 
 

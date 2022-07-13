@@ -22,7 +22,7 @@ time_spent <- read_csv(here("data", "log-data.csv"))
 #inspect data
 time_spent
 
-#load data 2: Academic Achievement
+#load data 2: Academic Achievement with here
 gradebook <- read_csv(here("data","gradebook-summary.csv"))
 
 #inspect data with glimpse
