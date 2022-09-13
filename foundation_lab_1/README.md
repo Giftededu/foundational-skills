@@ -4,7 +4,7 @@
 
 **Required Pre-Reading:**
 
-[Learning Analytics Goes to School, (Ch. 2, pp. 15 - 28) By Andrew Krumm, Barbara Means, Marie Bienkowski](https://github.com/laser-institute/essential-readings/blob/main/foundation_labs/foundlab_1/krumm_2018.pdf)
+[Learning Analytics Goes to School, (Ch. 2, pp. 15 - 28) By Andrew Krumm, Barbara Means, Marie Bienkowski](https://github.com/laser-institute/essential-readings/blob/main/foundational-skills/foundlab_1/krumm_2018.pdf)
 
 
 **Presentation and code-along:**
