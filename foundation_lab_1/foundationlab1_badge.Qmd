@@ -1,3 +1,4 @@
+
 ---
 title: 'Data Sources badge'
 subtitle: "LASER Institute Foundation Learning Lab 1"
@@ -66,9 +67,11 @@ Draft a research question of guided by techniques and data sources that you are 
 
 ### Part II: Data Product
 
-After you finish the script file for [lab1_badge](https://github.com/laser-institute/foundational-skills/tree/master/foundation_lab_1/lab1_badge) add the code fo reach problem into the correct code chunks below. # Making sure not to change the code chunk name.
+After you finish the script file for [lab1_badge](https://github.com/laser-institute/foundational-skills/tree/master/foundation_lab_1/lab1_badge) add it to the community board.
 
-Problem 1:
+
+
+### Problem 1:
 
 Create a data frame that includes two columns, one named "Students" and the other named "Foods". The first column should be this vector (note the intentional repeated values): Thor, Rogue, Electra, Electra, Wolverine
 
@@ -77,38 +80,46 @@ The second column should be this vector: Bread, Orange, Chocolate, Carrots, Milk
 
 ```{r, problem_1}
 # YOUR FINAL CODE HERE
-animals <- c("Thor", "Rogue", "Electra", "Electra", "Wolverine")
-food <- c("Bread", "Orange", "Chocolate", "Carrots", "Milk")
 
 
 ```
 
+### Problem 2
+
+Using the data frame created in Problem 2, use the table() command to create a frequency table for the column called "Students"
 
 ```{r, problem_2}
 
-students <- c("Thor", "Rogue", "Electra", "Electra", "Wolverine")
-food <- c("Bread", "Orange", "Chocolate", "Carrots", "Milk")
-df <- data.frame(students, food)
 
 ```
 
+### Problem 3
+
+Create a vector of five numbers of your choice between 0 and 10, save that vector to an object, and use the sum() function to calculate the sum of the numbers.
 
 ```{r, problem_3}
 # YOUR FINAL CODE HERE
 
-table(df$students)
 ```
 
+### Problem 4
 
+Create code to read the data/sci-online-classes.csv file into R using function(s) from the tidyverse. **(Note: this package loads with library(tidyverse)**. Save the data as an object called **sci_classes**.
+
+Examine the contents of sci_classes in your console.Is your object a tibble? How do you know? (Hint: Check the output in the console.)
 
 ```{r, problem_4}
 # YOUR FINAL CODE HERE
-library(tidyverse)
-sci_classes <- read_csv("~/RProj22/foundation_labs_2022/foundation_lab_1/data/sci-online-classes.csv")
 
-view(sci_classes)
 ```
 
+### Problem 5
+
+a. Select all columns except subject and section. 
+
+b. Assign to a new object with a different name. 
+
+c. Examine your data frame.
 
 
 ```{r, problem_5}
@@ -133,3 +144,4 @@ Congratulations, you've completed your Data Sources Badge!
 Publish on [RPubs](https://rpubs.com/) by clicking the “Publish” button located in the Viewer Pane when you knit your document. Note, you will need to quickly create a RPubs account. Publishing on GitHub using either [GitHub Pages](https://pages.github.com/) or the [HTML previewer](http://htmlpreview.github.io/).
 
 5. Post a new discussion on GitHub to our [Foundations Badges forum](https://github.com/orgs/laser-institute/teams/foundations/discussions/2). In your post, include a link to your published web page and `write` a short reflection highlighting one thing you learned from this lab and one thing you’d like to explore further.
+

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jeanne McClure" />
 
-<meta name="date" content="2022-07-13" />
+<meta name="date" content="2022-09-15" />
 
 <title>Data Sources badge</title>
 
@@ -366,7 +366,7 @@ pre code {
 <h1 class="title toc-ignore">Data Sources badge</h1>
 <h3 class="subtitle">LASER Institute Foundation Learning Lab 1</h3>
 <h4 class="author">Jeanne McClure</h4>
-<h4 class="date">July 13, 2022</h4>
+<h4 class="date">September 15, 2022</h4>
 
 </div>
 
@@ -446,48 +446,47 @@ learning occurs?”</p>
 <div id="part-ii-data-product" class="section level3">
 <h3>Part II: Data Product</h3>
 <p>After you finish the script file for <a href="https://github.com/laser-institute/foundational-skills/tree/master/foundation_lab_1/lab1_badge">lab1_badge</a>
-add the code fo reach problem into the correct code chunks below. #
-Making sure not to change the code chunk name.</p>
-<p>Problem 1:</p>
+add it to the community board.</p>
+</div>
+<div id="problem-1" class="section level3">
+<h3>Problem 1:</h3>
 <p>Create a data frame that includes two columns, one named “Students”
 and the other named “Foods”. The first column should be this vector
 (note the intentional repeated values): Thor, Rogue, Electra, Electra,
 Wolverine</p>
 <p>The second column should be this vector: Bread, Orange, Chocolate,
 Carrots, Milk</p>
-<pre class="r"><code># YOUR FINAL CODE HERE
-animals &lt;- c(&quot;Thor&quot;, &quot;Rogue&quot;, &quot;Electra&quot;, &quot;Electra&quot;, &quot;Wolverine&quot;)
-food &lt;- c(&quot;Bread&quot;, &quot;Orange&quot;, &quot;Chocolate&quot;, &quot;Carrots&quot;, &quot;Milk&quot;)</code></pre>
-<pre class="r"><code>students &lt;- c(&quot;Thor&quot;, &quot;Rogue&quot;, &quot;Electra&quot;, &quot;Electra&quot;, &quot;Wolverine&quot;)
-food &lt;- c(&quot;Bread&quot;, &quot;Orange&quot;, &quot;Chocolate&quot;, &quot;Carrots&quot;, &quot;Milk&quot;)
-df &lt;- data.frame(students, food)</code></pre>
-<pre class="r"><code># YOUR FINAL CODE HERE
-
-table(df$students)</code></pre>
-<pre><code>## 
-##   Electra     Rogue      Thor Wolverine 
-##         2         1         1         1</code></pre>
-<pre class="r"><code># YOUR FINAL CODE HERE
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.6     ✔ dplyr   1.0.8
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>sci_classes &lt;- read_csv(&quot;~/RProj22/foundation_labs_2022/foundation_lab_1/data/sci-online-classes.csv&quot;)</code></pre>
-<pre><code>## Rows: 603 Columns: 30</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr  (6): course_id, subject, semester, section, Gradebook_Item, Gender
-## dbl (23): student_id, total_points_possible, total_points_earned, percentage...
-## lgl  (1): Grade_Category
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>view(sci_classes)</code></pre>
+<pre class="r"><code># YOUR FINAL CODE HERE</code></pre>
+</div>
+<div id="problem-2" class="section level3">
+<h3>Problem 2</h3>
+<p>Using the data frame created in Problem 2, use the table() command to
+create a frequency table for the column called “Students”</p>
+</div>
+<div id="problem-3" class="section level3">
+<h3>Problem 3</h3>
+<p>Create a vector of five numbers of your choice between 0 and 10, save
+that vector to an object, and use the sum() function to calculate the
+sum of the numbers.</p>
+<pre class="r"><code># YOUR FINAL CODE HERE</code></pre>
+</div>
+<div id="problem-4" class="section level3">
+<h3>Problem 4</h3>
+<p>Create code to read the data/sci-online-classes.csv file into R using
+function(s) from the tidyverse. <strong>(Note: this package loads with
+library(tidyverse)</strong>. Save the data as an object called
+<strong>sci_classes</strong>.</p>
+<p>Examine the contents of sci_classes in your console.Is your object a
+tibble? How do you know? (Hint: Check the output in the console.)</p>
+<pre class="r"><code># YOUR FINAL CODE HERE</code></pre>
+</div>
+<div id="problem-5" class="section level3">
+<h3>Problem 5</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Select all columns except subject and section.</p></li>
+<li><p>Assign to a new object with a different name.</p></li>
+<li><p>Examine your data frame.</p></li>
+</ol>
 <pre class="r"><code># YOUR FINAL CODE HERE</code></pre>
 </div>
 <div id="knit-submit" class="section level3">
