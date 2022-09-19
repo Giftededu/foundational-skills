@@ -17,6 +17,7 @@
 library(tidyverse)
 
 
+
 #############################
 ###### Read in csv file #####
 #############################
@@ -34,11 +35,14 @@ glimpse(online_classes)
 ##### Read in Excel File ####
 #############################
 
+
 library(readxl)
 
-ccss_tweets <- read_excel("data/csss_tweets.xlsx")
+
+csss_tweets <- read_excel("data/csss_tweets.xlsx")
 view(ccss_tweets)
-head(ccss_tweets, n = 5)
+
+head(ccss_tweets)
 tail(ccss_tweets, n = 5)
 
 ###### Excel Function ######## 
