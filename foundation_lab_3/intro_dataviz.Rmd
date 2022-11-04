@@ -274,8 +274,58 @@ Write something about the color from Healys
 - **Figure and Ground**: Visual elements are taken to be either in the foreground or the background.
 - **Common Fate**: Elements sharing a direction of movement are perceived as a unit.
 
+---
+
+# More on Color
+
+.panelset[
+
+.panel[.panel-name[Rule 1]
 
 
+.center[
+<img src="img/rule1.png" height="400px"/>
+]
+
+
+
+.panel[.panel-name[Rule2]
+
+<img src="img/rule2.png" height="400px"/>
+]
+
+.panel[.panel-name[Rule3]
+
+<img src="img/rule3.png" height="400px"/>
+]
+
+.panel[.panel-name[Rule4]
+
+<img src="img/rule4.png" height="400px"/>
+]
+.panel[.panel-name[Rule5]
+
+<img src="img/rule5.png" height="400px"/>
+]
+.panel[.panel-name[Rule6]
+
+<img src="img/rule6.png" height="400px"/>
+]
+.panel[.panel-name[Rule7]
+
+<img src="img/rule7.png" height="400px"/>
+]
+.panel[.panel-name[Rule8]
+
+<img src="img/rule8.png" height="400px"/>
+]
+]
+
+]
+
+???
+
+From https://towardsdatascience.com/8-rules-for-optimal-use-of-color-in-data-visualization-b283ae1fc1e2
 ---
 
 
