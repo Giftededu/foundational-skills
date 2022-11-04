@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jeanne McClure" />
 
-<meta name="date" content="2022-07-13" />
+<meta name="date" content="2022-09-20" />
 
 <title>workflow_codealong</title>
 
@@ -1512,7 +1512,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">workflow_codealong</h1>
 <h4 class="author">Jeanne McClure</h4>
-<h4 class="date">2022-07-13</h4>
+<h4 class="date">2022-09-20</h4>
 
 </div>
 
@@ -1598,6 +1598,7 @@ we use a five step process: <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhE
 <h2>1. Prepare</h2>
 <p>Load Packages</p>
 <pre class="r"><code>#Load necessary packages
+
 library(tidyverse) #general analysis using dplyr
 library(here) #read in data</code></pre>
 </div>
@@ -1703,7 +1704,7 @@ survey &lt;- read_csv(here(&quot;data&quot;, &quot;survey.csv&quot;))</code></pr
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>#inspect data with view - yes the &quot;V&quot; is capitalized
+<pre class="r"><code>#inspect data with view
 head(survey)</code></pre>
 <pre><code>## # A tibble: 6 × 26
 ##   student_ID course_ID  subject semester section   int   val percomp    tv    q1
@@ -1714,6 +1715,20 @@ head(survey)</code></pre>
 ## 4 47979      OcnA-S216… OcnA    S216     01        4    3.67     2.5  3.86     4
 ## 5 48797      PhysA-S11… PhysA   S116     01        3.8  3.67     3.5  3.71     4
 ## 6 51943      FrScA-S21… FrScA   S216     03        3.8  3.67     3.5  3.71     4
+## # … with 16 more variables: q2 &lt;dbl&gt;, q3 &lt;dbl&gt;, q4 &lt;dbl&gt;, q5 &lt;dbl&gt;, q6 &lt;dbl&gt;,
+## #   q7 &lt;dbl&gt;, q8 &lt;dbl&gt;, q9 &lt;dbl&gt;, q10 &lt;dbl&gt;, date.x &lt;dttm&gt;, post_int &lt;dbl&gt;,
+## #   post_uv &lt;dbl&gt;, post_tv &lt;dbl&gt;, post_percomp &lt;dbl&gt;, date.y &lt;dttm&gt;,
+## #   date &lt;dttm&gt;</code></pre>
+<pre class="r"><code>tail(survey)</code></pre>
+<pre><code>## # A tibble: 6 × 26
+##   student_ID course_ID  subject semester section   int   val percomp    tv    q1
+##   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 19         AnPhA-S21… AnPhA   S217     02        4.2  5        5    4.5      5
+## 2 42         FrScA-S21… FrScA   S217     01        4    4        4    4        4
+## 3 52         FrScA-S21… FrScA   S217     03        4.4  2.67     3.5  3.75     4
+## 4 57         FrScA-S21… FrScA   S217     01        4.4  2.33     2.5  3.62     5
+## 5 72         FrScA-S21… FrScA   S217     01        5    3        4    4.25     5
+## 6 80         FrScA-S21… FrScA   S217     01        3.6  2.33     3    3.12     4
 ## # … with 16 more variables: q2 &lt;dbl&gt;, q3 &lt;dbl&gt;, q4 &lt;dbl&gt;, q5 &lt;dbl&gt;, q6 &lt;dbl&gt;,
 ## #   q7 &lt;dbl&gt;, q8 &lt;dbl&gt;, q9 &lt;dbl&gt;, q10 &lt;dbl&gt;, date.x &lt;dttm&gt;, post_int &lt;dbl&gt;,
 ## #   post_uv &lt;dbl&gt;, post_tv &lt;dbl&gt;, post_percomp &lt;dbl&gt;, date.y &lt;dttm&gt;,
@@ -1748,6 +1763,21 @@ giving parameters inside the function.</p>
 ##  9      85411 AnPhA   S116     01      F      Scheduling Confl… Approved/Enroll…
 ## 10      85583 AnPhA   S116     01      F      Scheduling Confl… Approved/Enroll…
 ## # … with 706 more rows, and 1 more variable: time_spent &lt;dbl&gt;</code></pre>
+<pre class="r"><code>time_spent</code></pre>
+<pre><code>## # A tibble: 716 × 6
+##    student_id course_id     gender enrollment_reason enrollment_stat… time_spent
+##         &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;  &lt;chr&gt;             &lt;chr&gt;                 &lt;dbl&gt;
+##  1      60186 AnPhA-S116-01 M      Course Unavailab… Approved/Enroll…      2087.
+##  2      66693 AnPhA-S116-01 M      Course Unavailab… Approved/Enroll…      2309.
+##  3      66811 AnPhA-S116-01 F      Course Unavailab… Approved/Enroll…      5299.
+##  4      66862 AnPhA-S116-01 F      Course Unavailab… Approved/Enroll…      1747.
+##  5      67508 AnPhA-S116-01 F      Scheduling Confl… Approved/Enroll…      2668.
+##  6      70532 AnPhA-S116-01 F      Learning Prefere… Approved/Enroll…      2938.
+##  7      77010 AnPhA-S116-01 F      Learning Prefere… Approved/Enroll…      1533.
+##  8      85249 AnPhA-S116-01 F      Course Unavailab… Approved/Enroll…      1210.
+##  9      85411 AnPhA-S116-01 F      Scheduling Confl… Approved/Enroll…       473.
+## 10      85583 AnPhA-S116-01 F      Scheduling Confl… Approved/Enroll…      5532.
+## # … with 706 more rows</code></pre>
 <pre class="r"><code>time_spent_2 &lt;- time_spent %&gt;%
   separate(course_id,
            c(&quot;subject&quot;, &quot;semester&quot;, &quot;section&quot;))
@@ -1851,6 +1881,7 @@ survey</code></pre>
 ## #   date.y &lt;dttm&gt;, date &lt;dttm&gt;</code></pre>
 <pre class="r"><code># load janitor to clean variable names that do not match
 library(janitor)</code></pre>
+<pre><code>## Warning: package &#39;janitor&#39; was built under R version 4.2.1</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;janitor&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -1907,7 +1938,8 @@ joined_data</code></pre>
 ## #   gender &lt;chr&gt;, enrollment_reason &lt;chr&gt;, enrollment_status &lt;chr&gt;,
 ## #   time_spent &lt;dbl&gt;, time_spent_hours &lt;dbl&gt;</code></pre>
 <pre class="r"><code>data_to_explore  &lt;- full_join(joined_data, survey, by = c(&quot;student_id&quot;,
-&quot;subject&quot;, &quot;section&quot;))</code></pre>
+&quot;subject&quot;, &quot;section&quot;))
+data_to_explore</code></pre>
 <pre class="r"><code>#mutate to change variable class from double or numeric to character
 joined_data &lt;- joined_data %&gt;%
   mutate(student_id = as.character(student_id))

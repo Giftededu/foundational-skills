@@ -81,6 +81,7 @@ We also learned about the open movement and its importance for  reproducible res
 From your pre-reading, Krumm 2018 sums it up nicely stating, "The basic idea
 behind the open data movement is that anyone can access or use a data set, and key to this movement is not just accessibility but usability. Making open data usable means making it accessible in machine-readable, structured, granular, and well-documented formats."
 
+
 ---
 
 # Agenda

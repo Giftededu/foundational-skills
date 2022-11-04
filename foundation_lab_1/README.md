@@ -2,7 +2,6 @@
 
 ### **Foundation lab 1** - Data Sources
 
-test1
 
 **Required Pre-Reading:**
 
