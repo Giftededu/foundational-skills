@@ -1,0 +1,541 @@
+---
+title: "ggplot"
+subtitle: "extended and beyond..."
+format: 
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    theme: journal
+    code-fold: true
+editor: visual
+---
+
+## GGPLOT Extended
+
+#### Load data and libraries
+
+We will load the following packages
+
+-   Tidyverse (we will use tidyr, dplyr, and ggplot)
+
+-   here (to pull the data from its absolute path)
+
+We will continue using our "data_to_explore.csv" file. This is the one that we wrangled from three different data frames; log files, grade data and survey data originally form Macfadyen, L. P., & Dawson, S. (2010). "Mining LMS data to develop an early warning system for educators: A proof of concept."
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+library(tidyverse) #includes ggplot, tidyr and dplyr 
+library(here) # to get the dat from the folder'
+
+data_to_explore <- read_csv(here("data", "data_to_explore.csv")) # load data frame
+
+#view data can also use glimpse(), str()
+data_to_explore 
+
+```
+
+## Wrangle the data frame
+
+I dropped NA's in proportion earned and time spent in hours. I also rename the subject names to their full course name. Finally, I created a whole grade point from the proportion earned by multiplying the percentage points by 100.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+new_df <- data_to_explore |>
+  drop_na(time_spent_hours, proportion_earned) %>%
+  mutate(subject = recode(subject, 
+                          "AnPhA" = "Anatomy",
+                          "BioA" = "Biology", 
+                          "FrScA" = "Forensics", 
+                          "OcnA" =  "Oceanography", 
+                          "PhysA" = "Physics"))|>
+   mutate(grade = proportion_earned * 100)
+  
+```
+
+## Visualizations
+
+### Grouping features(variables)
+
+To group together features you must have a categorical feature - factor or character class. If it is not, then you will need to convert using 'as. character()'
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+#layer 1: add data and aesthetics mapping 
+#layer 3: add color scale by type
+ggplot(new_df, aes(x = time_spent_hours, y = grade, color = enrollment_status)) +
+#layer 2: +  geom function type
+  geom_point() +
+#layer 4: add lables
+  labs(title="How Time Spent on Course LMS is Related to Points Earned in the Course", 
+       x="Time Spent (Hours)",
+       y = "Proportion of Points Earned")+
+#layer 5: add facet wrap
+  facet_wrap(~ subject) 
+```
+
+#### Group by subset and change graph scale
+
+Here we are going to subset right in ggplot to only look at 3 subjects trend lines compared to the trend line of all of the subjects, specifically the points earned for amount of time spend in the online LMS.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+gg_viz <- new_df %>% ggplot() +
+  aes(x = time_spent_hours, y = grade, colour = subject) +
+  geom_point(data = subset(new_df, 
+                           subject %in% c("Anatomy", "Forensics", "Oceanography")), 
+             size = 3) +
+  geom_smooth(data = subset(new_df, 
+                            subject %in% c("Anatomy", "Forensics", "Oceanography")), # trendlines for the three subjects
+              method = "lm", se = FALSE) +
+  geom_smooth(data = new_df, # trendline for all data points
+              method = "lm", se = FALSE, 
+              colour = "black", size = 2, linetype = 3) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 100), 
+                     limits = c(0, 150)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 5), 
+                     limits = c(0, 105)) +
+  scale_colour_manual(values = c("#959599", "#a65041", "#394165")) +
+  labs(x = "Time spent on LMS (hrs)",
+       y = "Total grade earned",
+       title = "How does time spent in LMS predict student achievement?",
+       subtitle = 'Data collected on each student, from the BB Vista production server, included whole term counts for frequency of usage of course materials and tools supporting content delivery, engagement and discussion, assessment and administration/management.',
+       caption = "Data source: Macfadyen, L. P., & Dawson, S. (2010). Mining LMS data to develop an early warning system for educators: \nA proof of concept.") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+gg_viz
+
+```
+
+#### Add a shape
+
+Below we are grouping by gender to show the gender we will use filled triangles and filled circles. Shape numbers & symbols that are shown in the R Graphics book.
+
+![Shape numbers from R Graphics book](images/Untitled%20drawing%20(16).png){width="400"}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+new_df %>% ggplot() +
+  aes(x = time_spent_hours, y = grade, shape = gender, colour = subject) +
+  geom_point(data = subset(new_df, 
+                           subject %in% c("Anatomy", "Forensics", "Oceanography")), 
+             size = 3) +
+  geom_smooth(data = subset(new_df, 
+                            subject %in% c("Anatomy", "Forensics", "Oceanography")), # trendlines for the three subjects
+              method = "lm", se = FALSE) +
+  geom_smooth(data = new_df, # trendline for all data points
+              method = "lm", se = FALSE, 
+              colour = "yellow", size = 2, linetype = 3) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 100), 
+                     limits = c(0, 150)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 5), 
+                     limits = c(0, 105)) +
+  scale_colour_manual(values = c("#959599", "#a65041", "#394165")) +
+  labs(x = "Time spent on LMS (hrs)",
+       y = "Total grade earned",
+       title = "How does time spent in LMS predict student achievement?",
+       subtitle = 'Data collected on each student, from the BB Vista production server, included whole term counts for frequency of usage of course materials and tools supporting content delivery, engagement and discussion, assessment and administration/management.',
+       caption = "Data source: Macfadyen, L. P., & Dawson, S. (2010). Mining LMS data to develop an early warning system for educators: A proof of concept.") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+```
+
+#### Specify shape with scale_shape_manual
+
+Here we are adding a new function so that we can choose the shape
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+new_df %>% ggplot() +
+  aes(x = time_spent_hours, y = grade, shape = gender, colour = subject) +
+  geom_point(data = subset(new_df, 
+                           subject %in% c("Anatomy", "Forensics", "Oceanography")), 
+             size = 3) +
+  geom_smooth(data = subset(new_df, 
+                            subject %in% c("Anatomy", "Forensics", "Oceanography")), # trendlines for the three subjects
+              method = "lm", se = FALSE) +
+  geom_smooth(data = new_df, # trendline for all data points
+              method = "lm", se = FALSE, 
+              colour = "black", size = 2, linetype = 3) +
+  scale_shape_manual(values = c(1,2)) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 100), 
+                     limits = c(0, 150)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 5), 
+                     limits = c(0, 105)) +
+  scale_colour_manual(values = c("#959599", "#a65041", "#394165")) +
+  labs(x = "Time spent on LMS (hrs)",
+       y = "Total grade earned",
+       title = "How does time spent in LMS predict student achievement?",
+       subtitle = 'Data collected on each student, from the BB Vista production server, included whole term counts for frequency of usage of course materials and tools supporting content delivery, engagement and discussion, assessment and administration/management.',
+       caption = "Data source: Macfadyen, L. P., & Dawson, S. (2010). Mining LMS data to develop an early warning system for educators: A proof of concept.") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+```
+
+## Use Plotly
+
+We can make our graphs interactive with the Plotly package. Use your mouse to scroll over the data points. We see the the hours spent by the grade earned.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+library(plotly)
+
+ia_fig1 <- plot_ly(new_df, x = ~time_spent_hours, y = ~grade) 
+
+
+ia_fig1
+```
+
+### Add Color to the Plotly graph
+
+Just like with ggplot we can color our data points by variable. We can see that the subjects are denoted by color.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+ia_fig2 <- plot_ly(new_df, x = ~time_spent_hours, y = ~grade, type = 'scatter',
+  mode = 'markers', color = ~subject) 
+
+
+ia_fig2
+```
+
+### Use Shape
+
+Again, like in ggplot you can parse by a shape style.
+
+```{r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+
+ia_fig3 <- plot_ly(new_df, x = ~time_spent_hours, y = ~grade, type = 'scatter',
+  mode = 'markers', symbol = ~subject, symbols = c('circle','x','o'),
+  color = I('black'), marker = list(size = 10))
+
+ia_fig3
+```
+
+### Create interactive with ggplot object
+
+We will use our originally saved gg_viz data and change to a plotly interactive object.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+gg_viz <- new_df %>% ggplot() +
+  aes(x = time_spent_hours, y = grade, colour = subject) +
+  geom_point(data = subset(new_df, 
+                           subject %in% c("Anatomy", "Forensics", "Oceanography")), 
+             size = 3) +
+  geom_smooth(data = subset(new_df, 
+                            subject %in% c("Anatomy", "Forensics", "Oceanography")), # trendlines for the three subjects
+              method = "lm", se = FALSE) +
+  geom_smooth(data = new_df, # trendline for all data points
+              method = "lm", se = FALSE, 
+              colour = "yellow", size = 2, linetype = 3) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 100), 
+                     limits = c(0, 150)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 5), 
+                     limits = c(0, 105)) +
+  scale_colour_manual(values = c("#959599", "#a65041", "#394165")) +
+  labs(x = "Time spent on LMS (hrs)",
+       y = "Total grade earned",
+       title = "How does time spent in LMS predict student achievement?",
+       subtitle = 'Data collected on each student, from the BB Vista production server, included whole term counts for frequency of usage of course materials and tools supporting content delivery, engagement and discussion, assessment and administration/management.',
+       caption = "Data source: Macfadyen, L. P., & Dawson, S. (2010). Mining LMS data to develop an early warning system for educators: A proof of concept.") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+gg_viz_inter <-  ggplotly(gg_viz)
+gg_viz_inter
+```
+
+## Annotate
+
+We will now learn to annotate on the graph. Below you will see that we can use the annotate() to write out information. By including \n you can go to the next line.
+
+```{r}
+#| echo: false 
+#| warning: false
+#| message: false
+
+
+gg_viz <- new_df %>% ggplot() +
+  aes(x = time_spent_hours, y = grade, colour = subject) +
+  geom_point(data = subset(new_df, 
+                           subject %in% c("Anatomy", "Forensics", "Oceanography")), 
+             size = 3) +
+  geom_smooth(data = subset(new_df, 
+                            subject %in% c("Anatomy", "Forensics", "Oceanography")), # trendlines for the three subjects
+              method = "lm", se = FALSE) +
+  geom_smooth(data = new_df, # trendline for all data points
+              method = "lm", se = FALSE, 
+              colour = "yellow", size = 2, linetype = 3) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 100), 
+                     limits = c(0, 150)) +
+  scale_y_continuous(expand = c(0, 0), 
+                     breaks = seq(0, 150, 5), 
+                     limits = c(0, 105)) +
+  scale_colour_manual(values = c("#959599", "#a65041", "#394165")) +
+  labs(x = "Time spent on LMS (hrs)",
+       y = "Total grade earned",
+       title = "How does time spent in LMS predict student achievement?",
+       subtitle = 'Data collected on each student, from the BB Vista production server, included whole term counts for frequency of usage of course materials and tools supporting content delivery, engagement and discussion, assessment and administration/management.',
+       caption = "Data source: Macfadyen, L. P., & Dawson, S. (2010). Mining LMS data to develop an early warning system for educators: \nA proof of concept.") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+gg_viz <- gg_viz +
+   annotate(
+    geom = "text", 
+    x = 90, y = 50, 
+    size = 4, color = "black", lineheight = .9,
+    label = "This line shows the relationship between \ntime spent and grade earned.")
+
+
+gg_viz
+```
+### Draw an arrow
+
+You can draw an arrow calling the x and y and always including xend and yend.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+gg_viz + annotate("segment", x = 55, xend = 43, y = 55, yend = 80,
+                  colour = "yellow", size = 2, arrow = arrow()) 
+```
+
+## Annotations with {ggforce}
+This package offers some more annotation options:
+- `geom_mark_rect()` encloses the data in the smallest enclosing rectangle
+- `geom_mark_circle()` encloses the data in the smallest enclosing circle
+- `geom_mark_ellipse()` encloses the data in the smallest enclosing ellipse
+- `geom_mark_hull()` encloses the data with a concave or convex hull - the {concaveman} package is required for this geom
+
+### filter by Anatomy by gender
+
+```{r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggforce)
+
+new_df %>% 
+  filter(subject == "Anatomy")%>%
+  drop_na(time_spent_hours, grade) %>% 
+  ggplot() +
+  aes(time_spent_hours, grade) +
+  geom_mark_circle(aes(fill = gender)) +
+  geom_point()
+```
+
+
+For this part, we'll look at data about almost 1800 films and whether they pass the Bechdel test (i.e.: are there two named female characters in the film who talk to each other about a topic that's not a man):
+```{r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+movies <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-09/movies.csv')
+
+mov <- movies %>% 
+  mutate(title = str_replace(title, "&#39;", "'"),
+         intgross = as.numeric(intgross),
+         budget = budget/1000000) %>% 
+  filter(clean_test != "dubious") %>% 
+  drop_na(year, budget, intgross, clean_test) %>% 
+  mutate(clean_test =  fct_recode(clean_test,
+                                  "no named female characters" = "nowomen",
+                                  "the women don't talk" = "notalk",
+                                  "the women only talk about men" = "men",
+                                  "pass!" = "ok"))
+
+(bechdel <- mov %>% 
+  ggplot() +
+  aes(x = year, y = budget, colour = clean_test) +
+  geom_jitter() +
+  labs(title = "Back to the Bechdel test!",
+      x = "Year", y = "Budget (in million)",
+      colour = "",
+      caption = "Includes 1642 films from 1970 - 2013. \n Data source: Bechdeltest.com API via Tidy Tuesday") +
+  scale_color_manual(values = c("#e24f22", "#FFB547FF", "#800000FF", "#4A6990FF")) +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5)))
+```
+
+### Labelling single data points
+If we want to label specific data points, we can filter them within `geom_mark_circle()`. The label will be the film's title, but we can also add a description, for which we'll pick the plot summary:
+```{r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+bechdel + 
+  geom_mark_circle(aes(label = title, 
+                       filter = title %in% c("Avatar", "Waterworld", "RoboCop", "Titanic"),
+                       description = plot), 
+                   expand = unit(7, "mm"),
+                   label.lineheight = 0.7,
+                   label.fontsize = c(8, 6),
+                   show.legend = FALSE)
+```
+
+
+### Try it!
+See the blue point that is higher than all the rest, between year 2000 and 2010? Find the title of that film using a filter command (hint, use the mov df and the columns budget and clean_test), then add a circle to the plot that identifies it by title. If you have time, also find the highest yellow dot between 1975 and 1980, and circle it too!
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+mov %>% 
+  filter(budget >= 300)
+
+mov %>% 
+  filter(budget > 50 & year < 1980)
+
+
+bechdel + 
+  geom_mark_circle(aes(label = title, 
+                       filter = title %in% c("Pirates of the Caribbean: At World's End", "Superman"),
+                       description = plot), 
+                   expand = unit(7, "mm"),
+                   label.lineheight = 0.7,
+                   label.fontsize = c(8, 6),
+                   show.legend = FALSE)
+```
+
+
+
+## Blurring data points with {ggfx}
+
+This package offers a variety of filters - here's an overview: https://www.r-bloggers.com/2021/03/say-goodbye-to-good-taste/
+
+We'll use the `with_blur()` command here. To draw attention to a specific group within the data, we can draw circles as we did earlier, but alternatively, we can blur the data we *don't* want to highlight. To achieve that, we need to wrap the `geom_jitter()` command in `with_blur()`:
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(ggfx)
+
+mov_blur <- ggplot(mov) +
+  aes(x = year, y = budget, colour = clean_test) +
+  with_blur(
+    geom_jitter(),
+    sigma = unit(0.8, 'mm') # specifies amount of blur (higher = more)
+  ) +
+  geom_jitter(data = mov %>% filter(clean_test == "no named female characters")) + # non blurred points
+  labs(title = "Back to the Bechdel test!",
+      x = "Year", y = "Budget (in million)",
+      colour = "",
+      caption = "Includes 1642 films from 1970 - 2013. \n Data source: Bechdeltest.com API via Tidy Tuesday") +
+  scale_color_manual(values = c("#e24f22", "#FFB547FF", "#800000FF", "#4A6990FF")) +
+  theme_minimal() +
+  theme(legend.position = "top",
+        plot.title = element_text(hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5))
+
+mov_blur
+```
+
+
+
+We can also blur other plot elements in theme:
+```{r}
+
+#| echo: false
+#| warning: false
+#| message: false
+
+
+bechdel +
+  theme(plot.caption = with_blur(element_text(), sigma = 2))
+
+bechdel +
+  theme(legend.text = with_blur(element_text(), sigma = 2))
+```
+
+
+## Zooming in
+Finally, we might want to zoom in on a range or a group of data points. The `facet_zoom()` command achieves just that:
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+new_df %>% 
+  ggplot() +
+  aes(x = time_spent_hours, y = grade, colour = subject) +
+  geom_point() +
+  facet_zoom(x = subject == "Anatomy")
+```
+

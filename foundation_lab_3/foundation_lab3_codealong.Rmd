@@ -130,9 +130,9 @@ ggplot(data_to_explore, aes(x = time_spent_hours, y = proportion_earned, color =
 #layer 2: +  geom function type
   geom_point() +
 #layer 4: add lables
-    x_lab(title="How Time Spent on Course LMS is Related to Points Earned in the Course", 
+  labs(title="How Time Spent on Course LMS is Related to Points Earned in the Course", 
        x="Time Spent (Hours)",
-       y = "Proportion of Points Earned")
+       y = "Proportion of Points Earned")+
 #layer 5: add facet wrap
   facet_wrap(~ subject) 
 ```
