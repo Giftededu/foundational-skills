@@ -365,7 +365,7 @@ gg_viz + annotate("segment", x = 55, xend = 43, y = 55, yend = 80,
                   colour = "yellow", size = 2, arrow = arrow()) 
 ```
 
-## Annotations with {ggforce}
+## Annotations with {ggforce} - the next session was adopted RLadies of Frieborn
 This package offers some more annotation options:
 - `geom_mark_rect()` encloses the data in the smallest enclosing rectangle
 - `geom_mark_circle()` encloses the data in the smallest enclosing circle
@@ -447,7 +447,7 @@ bechdel +
 ```
 
 
-### Try it!
+### One more
 See the blue point that is higher than all the rest, between year 2000 and 2010? Find the title of that film using a filter command (hint, use the mov df and the columns budget and clean_test), then add a circle to the plot that identifies it by title. If you have time, also find the highest yellow dot between 1975 and 1980, and circle it too!
 ```{r}
 #| echo: false
